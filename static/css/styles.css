@@ -12,8 +12,8 @@ h2 {
 .container {
   width: 970px;
   height: 700px;
-
-  /*background-image: url(img/forest.jpg);*/
+  overflow: visible;
+  /* background-image: url(../img/fruit-background.jpg); */
   margin: auto;
   padding: 20px;
 }
@@ -49,19 +49,26 @@ h2 {
 }
 
 .math-problem {
-  
-  width: 95%;
-  border: 2px solid pink;
-  background-color: silver;
-  margin-top: 300px;
+
+  width: 100%;
+  background-image: url('../img/clouds.png');
   margin-right: auto;
   margin-left: auto;
-  
-}
+  padding-bottom:10px;
 
-.math-problem h3 {
+
+}
+.math-problem h1{
+  display:inline-block;
+  margin-right:50px;
+  margin-left:10px;
+  vertical-align: top;
+}
+.math-problem .option {
+  margin-top:10px;
   padding-left: 10px;
   text-align: center;
+  display:inline-block;
 }
 
 .player1-problem, .player2-problem {
