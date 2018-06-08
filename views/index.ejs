@@ -65,14 +65,14 @@
 
           var htmlStr = "";
           htmlStr += "<h1>"+num1+" x "+num2+" = </h1>";
-          htmlStr += "<label><h3 id='keyA'>"+key[arr[0]]+"</h3>";
-          htmlStr += "<button class='answer'>A</button></label>";
-          htmlStr += "<label><h3 id='keyS'>"+key[arr[1]]+"</h3>";
-          htmlStr += "<button class='answer'>S</button></label>";
-          htmlStr += "<label><h3 id='keyD'>"+key[arr[2]]+"</h3>";
-          htmlStr += "<button class='answer'>D</button></label>";
-          htmlStr += "<label><h3 id='keyF'>"+key[arr[3]]+"</h3>";
-          htmlStr += "<button class='answer'>F</button></label>";
+          htmlStr += "<div class = 'option'><h3 id='keyA'>"+key[arr[0]]+"</h3>";
+          htmlStr += "<button class='answer'>A</button></div>";
+          htmlStr += "<div class = 'option'><h3 id='keyS'>"+key[arr[1]]+"</h3>";
+          htmlStr += "<button class='answer'>S</button></div>";
+          htmlStr += "<div class = 'option'><h3 id='keyD'>"+key[arr[2]]+"</h3>";
+          htmlStr += "<button class='answer'>D</button></div>";
+          htmlStr += "<div class = 'option'><h3 id='keyF'>"+key[arr[3]]+"</h3>";
+          htmlStr += "<button class='answer'>F</button></div>";
           $('.math-problem').html(htmlStr);
         }
 
