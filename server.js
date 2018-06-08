@@ -32,12 +32,14 @@ io.on('connection', function (socket) {
       io.emit('current_users');
     }
     io.emit('current_users', users);
+    socket.emit("this_user_dist", users[socket.id]['dist'])
   })
   socket.on('wrong', function() {
     if(users[socket.id].dist > 10) {
       users[socket.id].dist -= 10;
     }
     io.emit('current_users', users);
+    socket.emit("this_user_dist", users[socket.id]['dist'])
   })
   socket.on('disconnect', function() {
     delete users[socket.id];
