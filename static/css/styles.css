@@ -12,8 +12,8 @@ h2 {
 .container {
   width: 970px;
   height: 700px;
-
-  /*background-image: url(img/forest.jpg);*/
+  overflow: visible;
+  /* background-image: url(../img/fruit-background.jpg); */
   margin: auto;
   padding: 20px;
 }
@@ -49,10 +49,9 @@ h2 {
 }
 
 .math-problem {
-  
-  width: 95%;
-  border: 2px solid pink;
-  background-color: silver;
+
+  width: 100%;
+  background-image: url('../img/clouds.png');
   margin-right: auto;
   margin-left: auto;
   padding-bottom:10px;
