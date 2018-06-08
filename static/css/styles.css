@@ -12,7 +12,7 @@ h2 {
 .container {
   width: 970px;
   height: 700px;
-  background-color: black;
+
   /*background-image: url(img/forest.jpg);*/
   margin: auto;
   padding: 20px;
@@ -32,7 +32,7 @@ h2 {
   display: none;
 }
 
-.player1-img, .player2-img {
+.player-img {
   width: 100px;
   display: block;
 }
