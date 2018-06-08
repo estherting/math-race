@@ -23,8 +23,9 @@ io.on('connection', function (socket) {
 
   })
   socket.on('advance', function() {
-    users[socket.id].dist += 15
-    if(users[socket.id].dist >= 500) {
+    users[socket.id].dist += 50;
+    if(users[socket.id].dist >= 820) {
+      // io.emit('current_users');
       io.emit('win', users[socket.id]['name']);
       for (user in users) {
         users[user]['dist'] = 0;
@@ -32,11 +33,11 @@ io.on('connection', function (socket) {
       io.emit('current_users');
     }
     io.emit('current_users', users);
-    socket.emit("this_user_dist", users[socket.id]['dist'])
+    // socket.emit("this_user_dist", users[socket.id]['dist'])
   })
   socket.on('wrong', function() {
-    if(users[socket.id].dist > 10) {
-      users[socket.id].dist -= 10;
+    if(users[socket.id].dist > 50) {
+      users[socket.id].dist -= 50;
     }
     io.emit('current_users', users);
     socket.emit("this_user_dist", users[socket.id]['dist'])
