@@ -23,7 +23,7 @@ io.on('connection', function (socket) {
 
   })
   socket.on('advance', function() {
-    users[socket.id].dist += 10
+    users[socket.id].dist += 15
     if(users[socket.id].dist >= 500) {
       io.emit('win', users[socket.id]['name']);
       for (user in users) {

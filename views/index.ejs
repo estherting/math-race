@@ -18,6 +18,7 @@
           var str = ""
           for (user in users){
             str += "<div><p>"+users[user]['name']+"</p><img style='margin-left: "+users[user]['dist']+"px' class='player-img' id='"+user+"' src='img/bunny.png'></div>"
+            str += "<img src='../img/flag.png id='flag'>'"
           }
           $('.players').html(str);
         })

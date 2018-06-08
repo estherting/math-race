@@ -54,7 +54,7 @@ h2 {
   background-image: url('../img/clouds.png');
   margin-right: auto;
   margin-left: auto;
-  padding-bottom:10px;
+  /* padding-bottom:10px; */
 
 
 }
@@ -89,8 +89,9 @@ h2 {
   display: block;
   width: 30px;
 }
-.players{
+.players div {
   background: url("../img/grass.png");
   background-position: center;
   background-size: cover;
+  font-size: 1.2em;
 }
