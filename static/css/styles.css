@@ -56,7 +56,7 @@ h2 {
   margin-top: 300px;
   margin-right: auto;
   margin-left: auto;
-
+  
 }
 
 .math-problem h3 {
@@ -81,4 +81,9 @@ h2 {
 .answer {
   display: block;
   width: 30px;
+}
+.players{
+  background: url("../img/grass.png");
+  background-position: center;
+  background-size: cover;
 }
