@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Math game!</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
+    <script>
+      $(document).ready(function() {
+        var socket = io();
+
+        socket.on('greeting', function (data) {
+            console.log(data.msg);
+            socket.emit('thankyou', { msg: 'Thank you for connecting me! -Client' });
+        });
+
+
+        var state = 0;
+        $('.buttons button').hover(function() {
+          var arena = $(this).text();
+          $('.container').css('background', 'no-repeat center center url(img/' + arena + '.jpg)');
+          $('.container').css('background-size', 'cover');
+        }, function() {
+          if(state == 0) {
+            $('.container').css('background', 'black');
+          }
+        })
+
+        $('.buttons button').click(function() {
+          $('.arena-select').hide();
+          $('.player-select').show();
+          state = 1;
+        })
+
+        // select player
+        var isPlayer1Ready = false;
+        var isPlayer2Ready = false;
+        $('.player1').change(function() {
+          var player1 = $("option:selected", this).text();
+          $('.player1-img').attr('src', 'img/' + player1 + '.png');
+          if(player1 != "Select Player 1"){
+            isPlayer1Ready = true;
+          }
+        })
+
+        $('.player2').change(function() {
+          var player2 = $("option:selected", this).text();
+          $('.player2-img').attr('src', 'img/' + player2 + '.png');
+          if(player2 != "Select Player 2"){
+            isPlayer2Ready = true;
+          }
+        })
+
+        // https://bost.ocks.org/mike/shuffle/
+        function shuffle(array) {
+          var m = array.length, t, i;
+          // While there remain elements to shuffle…
+          while (m) {
+            // Pick a remaining element…
+            i = Math.floor(Math.random() * m--);
+            // And swap it with the current element.
+            t = array[m];
+            array[m] = array[i];
+            array[i] = t;
+          }
+          return array;
+        }
+
+
+        var num1 = 0;
+        var num2 = 0;
+        var correct_answer = 0;
+        // generate random math problems
+        function generateProblems(){
+          num1 = Math.floor(Math.random()*10)+1;
+          num2 = Math.floor(Math.random()*10)+1;
+          correct_answer = num1*num2;
+
+          var key = {1: correct_answer,
+                      2: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
+                      3: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
+                      4: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),}
+          var arr = [1, 2, 3, 4]
+          arr = shuffle(arr);
+
+          var htmlStr = "";
+          htmlStr += "<h1>"+num1+" x "+num2+" = </h1>";
+          htmlStr += "<label><h3 id='keyA'>"+key[arr[0]]+"</h3>";
+          htmlStr += "<button class='answer'>A</button></label>";
+          htmlStr += "<label><h3 id='keyS'>"+key[arr[1]]+"</h3>";
+          htmlStr += "<button class='answer'>S</button></label>";
+          htmlStr += "<label><h3 id='keyD'>"+key[arr[2]]+"</h3>";
+          htmlStr += "<button class='answer'>D</button></label>";
+          htmlStr += "<label><h3 id='keyF'>"+key[arr[3]]+"</h3>";
+          htmlStr += "<button class='answer'>F</button></label>";
+          $('.player1-problem').html(htmlStr);
+        }
+
+
+        var num3, num4, correct_answer2
+        // generate random math problems
+        function generateProblems2(){
+          num3 = Math.floor(Math.random()*10)+1;
+          num4 = Math.floor(Math.random()*10)+1;
+          correct_answer2 = num3*num4;
+
+          var key = {1: correct_answer,
+                      2: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
+                      3: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
+                      4: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),}
+          var arr = [1, 2, 3, 4]
+          arr = shuffle(arr);
+
+          var htmlStr = "";
+          htmlStr += "<h1>"+num3+" x "+num4+" = </h1>";
+          htmlStr += "<label><h3 id='keyH'>"+key[arr[0]]+"</h3>";
+          htmlStr += "<button class='answer'>H</button></label>";
+          htmlStr += "<label><h3 id='keyJ'>"+key[arr[1]]+"</h3>";
+          htmlStr += "<button class='answer'>J</button></label>";
+          htmlStr += "<label><h3 id='keyK'>"+key[arr[2]]+"</h3>";
+          htmlStr += "<button class='answer'>K</button></label>";
+          htmlStr += "<label><h3 id='keyL'>"+key[arr[3]]+"</h3>";
+          htmlStr += "<button class='answer'>L</button></label>";
+          $('.player2-problem').html(htmlStr);
+        }
+
+
+        // start game
+        // assumption: user doesn't change player back to "select player 1/2" after initial selection
+        $('.player-select form').submit(function() {
+          if(isPlayer1Ready && isPlayer2Ready) {
+            $('.player-select').hide();
+            $('.math-problem').show();
+            generateProblems();
+            generateProblems2();
+          }
+          return false;
+        })
+
+
+
+        // when player selects the right answer...
+        // A = 65  S = 83  D = 68  F = 70
+        // H = 72  J = 74  K = 75  L = 76
+
+        $(document).keydown(function(e) {
+          console.log(e.keyCode);
+          // if A is pressed, submit form, and form.val() will be 20
+          if(e.keyCode == 65) { // A
+            var player1_answer = $('.player1-problem #keyA').text();
+            console.log(player1_answer);
+          }
+          if(e.keyCode == 83) { // S
+            var player1_answer = $('.player1-problem #keyS').text();
+            console.log(player1_answer);
+          }
+          if(e.keyCode == 68) { // D
+            var player1_answer = $('.player1-problem #keyD').text();
+            console.log(player1_answer);
+          }
+          if(e.keyCode == 70) { // F
+            var player1_answer = $('.player1-problem #keyF').text();
+            console.log(player1_answer);
+          }
+          if(e.keyCode == 72) { // H
+            var player2_answer = $('.player2-problem #keyH').text();
+            console.log(player2_answer);
+          }
+          if(e.keyCode == 74) { // J
+            var player2_answer = $('.player2-problem #keyJ').text();
+            console.log(player2_answer);
+          }
+          if(e.keyCode == 75) { // K
+            var player2_answer = $('.player2-problem #keyK').text();
+            console.log(player2_answer);
+          }
+          if(e.keyCode == 76) { // H
+            var player2_answer = $('.player2-problem #keyL').text();
+            console.log(player2_answer);
+          }
+
+          // if user answer is correct...
+          if(player1_answer == correct_answer) {
+            //$('.player1-problem').html("Correct!");
+            // player 1 advances
+            $('.player1-img').css("left", "+=100");
+            generateProblems();
+          }
+          if(player2_answer == correct_answer2) {
+            $('.player2-img').css("left", "+=100");
+            generateProblems2();
+          }
+
+          $('.player1-problem').submit(function() {
+            //console.log($(this).val());
+            //console.log($('.player1-problem button').val());
+            return false;
+          })
+
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="modal arena-select">
+        <h2>Select Arena</h2>
+        <div class="buttons">
+          <button>beach</button>
+          <button>earth</button>
+          <button>dojo</button>
+          <button>forest</button>
+          <button>matrix</button>
+          <button>snow</button>
+        </div>
+      </div>
+
+      <div class="modal player-select">
+        <h2>Select Player</h2>
+        <form class="drop-down">
+          <select class="player1">
+            <option>Select Player 1</option>
+            <option>bunny</option>
+          </select>
+          <select class="player2">
+            <option>Select Player 2</option>
+            <option>bunny</option>
+          </select>
+          <button type="submit">START!</button>
+        </form>
+      </div>
+
+      <img class="player1-img" src="">
+      <img class="player2-img" src="">
+
+      <div class="math-problem">
+        <form class="player1-problem"></form>
+        <form class="player2-problem"></form>
+      </div>
+  </body>
+</html>

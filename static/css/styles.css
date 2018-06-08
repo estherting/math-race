@@ -1,0 +1,84 @@
+button {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin-left: 13px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.container {
+  width: 970px;
+  height: 700px;
+  background-color: black;
+  /*background-image: url(img/forest.jpg);*/
+  margin: auto;
+  padding: 20px;
+}
+
+.modal {
+  width: 300px;
+  height: 150px;
+  border-radius: 10px;
+  background-color: silver;
+  border: 5px solid pink;
+  margin: auto;
+  margin-top: 250px;
+}
+
+.player-select {
+  display: none;
+}
+
+.player1-img, .player2-img {
+  width: 100px;
+  display: block;
+}
+
+.player1-img {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+.player2-img {
+  position: absolute;
+  top: 130px;
+  left: 30px;
+}
+
+.math-problem {
+  display: none;
+  width: 95%;
+  border: 2px solid pink;
+  background-color: silver;
+  margin-top: 300px;
+  margin-right: auto;
+  margin-left: auto;
+
+}
+
+.math-problem h3 {
+  padding-left: 10px;
+  text-align: center;
+}
+
+.player1-problem, .player2-problem {
+  display: inline-block;
+  width: 45%;
+  margin: auto;
+}
+.player1-problem {
+  border-right: 2px solid grey;
+}
+
+.player1-problem label, .player2-problem label {
+  display: inline-block;
+  text-align: center;
+}
+
+.answer {
+  display: block;
+  width: 30px;
+}
