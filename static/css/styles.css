@@ -53,15 +53,22 @@ h2 {
   width: 95%;
   border: 2px solid pink;
   background-color: silver;
-  margin-top: 300px;
   margin-right: auto;
   margin-left: auto;
+  padding-bottom:10px;
 
 }
-
-.math-problem h3 {
+.math-problem h1{
+  display:inline-block;
+  margin-right:50px;
+  margin-left:10px;
+  vertical-align: top;
+}
+.math-problem .option {
+  margin-top:10px;
   padding-left: 10px;
   text-align: center;
+  display:inline-block;
 }
 
 .player1-problem, .player2-problem {
