@@ -10,7 +10,7 @@
     <script>
       $(document).ready(function() {
         var name = prompt('What is your name?')
-
+        var dist = 0;
         var socket = io();
         socket.emit('new_user', name);
         socket.on('current_users', function(users){
@@ -28,6 +28,9 @@
         })
         socket.on('win', function(winner) {
           alert(winner + ' won')
+        })
+        socket.on("this_user_dist", function(data){
+          dist = data
         })
 
         // MATH
@@ -52,29 +55,64 @@
         var correct_answer = 0;
         // generate random math problems
         function generateProblems(){
-          num1 = Math.floor(Math.random()*10)+1;
-          num2 = Math.floor(Math.random()*10)+1;
-          correct_answer = num1*num2;
+          if(Math.floor(Math.random()*3)){
+            num1 = Math.floor(Math.random()*10)+1;
+            num2 = Math.floor(Math.random()*10)+1;
+            correct_answer = num1*num2;
+         
+            var key = {1: correct_answer,
+                        2: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
+                        3: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
+                        4: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),}
+            var arr = [1, 2, 3, 4]
+            arr = shuffle(arr);
 
-          var key = {1: correct_answer,
-                      2: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
-                      3: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),
-                      4: (Math.floor(Math.random()*10)+1)*(Math.floor(Math.random()*10)+1),}
-          var arr = [1, 2, 3, 4]
-          arr = shuffle(arr);
+            var htmlStr = "";
+            htmlStr += "<h1>"+num1+" x "+num2+" = </h1>";
+            htmlStr += "<div class = 'option'><h3 id='keyA'>"+key[arr[0]]+"</h3>";
+            htmlStr += "<button class='answer'>A</button></div>";
+            htmlStr += "<div class = 'option'><h3 id='keyS'>"+key[arr[1]]+"</h3>";
+            htmlStr += "<button class='answer'>S</button></div>";
+            htmlStr += "<div class = 'option'><h3 id='keyD'>"+key[arr[2]]+"</h3>";
+            htmlStr += "<button class='answer'>D</button></div>";
+            htmlStr += "<div class = 'option'><h3 id='keyF'>"+key[arr[3]]+"</h3>";
+            htmlStr += "<button class='answer'>F</button></div>";
+            $('.math-problem').html(htmlStr);
+          }
+          else{
+            correct_answer = Math.floor(Math.random()*10)+1;
+            num2 = Math.floor(Math.random()*10)+1;
+            num1 = correct_answer*num2;
+            var key = {1: correct_answer,
+                      2: Math.floor(Math.random()*10)+1,
+                      3: Math.floor(Math.random()*10)+1,
+                      4: Math.floor(Math.random()*10)+1,}
+            for(var i = 0;i<3;i++){
+              var blah = true
+              while(blah){
+                var rand_answer = Math.floor(Math.random()*10)+1
+                if(rand_answer != correct_answer){
+                  key[i+2] = rand_answer
+                  blah = false
+                }
+              }
+            }
+            var arr = [1, 2, 3, 4]
+            arr = shuffle(arr);
 
-          var htmlStr = "";
-          htmlStr += "<h1>"+num1+" x "+num2+" = </h1>";
-          htmlStr += "<div class = 'option'><h3 id='keyA'>"+key[arr[0]]+"</h3>";
-          htmlStr += "<button class='answer'>A</button></div>";
-          htmlStr += "<div class = 'option'><h3 id='keyS'>"+key[arr[1]]+"</h3>";
-          htmlStr += "<button class='answer'>S</button></div>";
-          htmlStr += "<div class = 'option'><h3 id='keyD'>"+key[arr[2]]+"</h3>";
-          htmlStr += "<button class='answer'>D</button></div>";
-          htmlStr += "<div class = 'option'><h3 id='keyF'>"+key[arr[3]]+"</h3>";
-          htmlStr += "<button class='answer'>F</button></div>";
-          $('.math-problem').html(htmlStr);
+            var htmlStr = "";
+            htmlStr += "<h1>"+num1+" / "+num2+" = </h1>";
+            htmlStr += "<div class = 'option'><h3 id='keyA'>"+key[arr[0]]+"</h3>";
+            htmlStr += "<button class='answer'>A</button></div>";
+            htmlStr += "<div class = 'option'><h3 id='keyS'>"+key[arr[1]]+"</h3>";
+            htmlStr += "<button class='answer'>S</button></div>";
+            htmlStr += "<div class = 'option'><h3 id='keyD'>"+key[arr[2]]+"</h3>";
+            htmlStr += "<button class='answer'>D</button></div>";
+            htmlStr += "<div class = 'option'><h3 id='keyF'>"+key[arr[3]]+"</h3>";
+            htmlStr += "<button class='answer'>F</button></div>";
+            $('.math-problem').html(htmlStr);
         }
+      }
 
         $('.start').click(function() {
           console.log('clickclick')
