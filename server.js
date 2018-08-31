@@ -24,7 +24,22 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, " Email is required"],
     minlength: [3, " Email must be at least 3 characters"],
-  }
+  },
+  addition_score: {
+    type: Number,
+  },
+  subtraction_score:{
+    type: Number,
+  },
+  multiplication_score:{
+    type: Number,
+  },
+  division_score:{
+    type: Number,
+  },
+  combo_score:{
+    type: Number,
+  },
 }, {timestamps: true});
 
 const Users = mongoose.model("users", UserSchema);
@@ -50,7 +65,7 @@ io.on('connection', function (socket) {
   });
   socket.on('new_user', function(thisname){
 
-    users[socket.id] = {name: thisname, dist: 0}
+    users[socket.id] = {name: thisname, dist: 0};
     io.emit('current_users', users);
 
   });
